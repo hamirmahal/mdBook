@@ -533,7 +533,11 @@ function playground_text(playground, hidden = true) {
   }
 
   // Toggle sidebar
-  sidebarToggleButton.addEventListener("click", function sidebarToggle() {
+  sidebarToggleButton.addEventListener("click", sidebarToggle);
+  sidebarResizeHandle.addEventListener("mousedown", initResize, false);
+
+  function sidebarToggle() {
+    console.log("sidebarToggle");
     if (body.classList.contains("sidebar-hidden")) {
       var current_width = parseInt(
         document.documentElement.style.getPropertyValue("--sidebar-width"),
@@ -552,10 +556,7 @@ function playground_text(playground, hidden = true) {
         showSidebar();
       }
     }
-  });
-
-  sidebarResizeHandle.addEventListener("mousedown", initResize, false);
-
+  }
   function initResize(e) {
     window.addEventListener("mousemove", resize, false);
     window.addEventListener("mouseup", stopResize, false);
