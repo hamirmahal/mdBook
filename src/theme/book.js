@@ -506,12 +506,16 @@ function playground_text(playground, hidden = true) {
     sidebar.setAttribute("aria-hidden", false);
     try {
       localStorage.setItem("mdbook-sidebar", "visible");
-    } catch (e) {}
+      console.log("mdbook-sidebar", "visible");
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   var sidebarAnchorToggles = document.querySelectorAll("#sidebar a.toggle");
 
   function toggleSection(ev) {
+    console.log("toggleSection");
     ev.currentTarget.parentElement.classList.toggle("expanded");
   }
 
@@ -529,7 +533,10 @@ function playground_text(playground, hidden = true) {
     sidebar.setAttribute("aria-hidden", true);
     try {
       localStorage.setItem("mdbook-sidebar", "hidden");
-    } catch (e) {}
+      console.log("mdbook-sidebar", "hidden");
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   // Toggle sidebar
@@ -544,15 +551,23 @@ function playground_text(playground, hidden = true) {
         10
       );
       if (current_width < 150) {
+        console.log("current_width < 150");
         document.documentElement.style.setProperty("--sidebar-width", "150px");
       }
+      console.log("sidebar-hidden, showSidebar()");
       showSidebar();
     } else if (body.classList.contains("sidebar-visible")) {
+      console.log("sidebar-visible, hideSidebar()");
       hideSidebar();
     } else {
       if (getComputedStyle(sidebar)["transform"] === "none") {
+        console.log(
+          "getComputedStyle(sidebar)[transform] === none",
+          "showSidebar()"
+        );
         hideSidebar();
       } else {
+        console.log("showSidebar()");
         showSidebar();
       }
     }
@@ -581,6 +596,14 @@ function playground_text(playground, hidden = true) {
     window.removeEventListener("mouseup", stopResize, false);
   }
 
+  // Add Ctrl + Shift + S as a shortcut to toggle the sidebar.
+  document.addEventListener("keydown", function (event) {
+    if (event.ctrlKey && event.shiftKey && event.key === "S") {
+      event.preventDefault();
+      console.log("Ctrl + Shift + S");
+      sidebarToggle();
+    }
+  });
   document.addEventListener(
     "touchstart",
     function (e) {

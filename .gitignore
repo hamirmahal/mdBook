@@ -3,6 +3,7 @@ target
 # MacOS temp file
 .DS_Store
 
+book/
 book-test
 guide/book
 
